@@ -119,7 +119,7 @@
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
-        <img src="decoration.gif" class="avatar-full-gif" alt="Megu"/>
+        <img src="decoration.gif" class="avatar-full-gif" id="decorationImg" alt="Megu"/>
         <div class="avatar-badge">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="display:block;">
             <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" fill="#ffc04f" transform="translate(24,0) scale(-1,1)"/>
@@ -507,6 +507,21 @@
     applyOffset();
     requestAnimationFrame(autoTick);
   }
+  // ── Discord Decoration (real-time) ──
+  async function fetchDecoration() {
+    try {
+      const res = await fetch('https://discord-avatar-server.onrender.com/api/decoration');
+      const data = await res.json();
+      if (data.success && data.decoration_url) {
+        document.getElementById('decorationImg').src = data.decoration_url;
+      }
+    } catch (e) {
+      console.log('Decoration fetch failed, using fallback');
+    }
+  }
+  fetchDecoration();
+  setInterval(fetchDecoration, 60000);
+
 </script>
 </body>
 </html>
