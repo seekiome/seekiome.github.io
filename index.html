@@ -509,21 +509,16 @@
     applyOffset();
     requestAnimationFrame(autoTick);
   }
-  // ── Discord Decoration + Avatar (real-time) ──
+  // ── Discord Decoration (real-time) ──
   async function fetchDecoration() {
     try {
       const res = await fetch('https://discord-avatar-server.onrender.com/api/decoration');
       const data = await res.json();
-      if (data.success) {
-        if (data.decoration_url) {
-          document.getElementById('decorationImg').src = data.decoration_url;
-        }
-        if (data.avatar_url) {
-          document.getElementById('avatarImg').src = data.avatar_url;
-        }
+      if (data.success && data.decoration_url) {
+        document.getElementById('decorationImg').src = data.decoration_url;
       }
     } catch (e) {
-      console.log('Fetch failed, using fallback');
+      console.log('Decoration fetch failed, using fallback');
     }
   }
   fetchDecoration();
