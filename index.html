@@ -23,8 +23,7 @@
       min-height: 100vh;
       cursor: default;
     }
-    .sparkles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; visibility: hidden; opacity: 0; }
-    .sparkles.visible { visibility: visible; animation: fadeInContent 1s ease forwards; }
+    .sparkles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
     .sparkle { position: absolute; font-size: 1.2rem; animation: floatUp linear infinite; opacity: 0.5; }
     @keyframes floatUp {
       0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
@@ -101,10 +100,10 @@
     @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } .card.full { grid-column: 1; } }
   </style>
   <style>
-    #splash { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #splash { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1s ease; }
     #splash.loading { pointer-events: none; cursor: default; }
     #splash.ready { pointer-events: auto; cursor: pointer; }
-    #splash.hide { display: none; }
+    #splash.hide { opacity: 0; pointer-events: none; }
     .splash-text { font-family: 'Fredoka One', cursive; font-size: 2.4rem; color: #fff; letter-spacing: 4px; animation: splashPulse 1.6s ease-in-out infinite; }
     .splash-sub { font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 10px; letter-spacing: 2px; }
     @keyframes splashPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.97); } }
@@ -367,11 +366,10 @@
     if (!splash.classList.contains('ready')) return;
     // мгновенно убираем заставку
     splash.classList.add('hide');
-    splash.remove();
+    setTimeout(() => splash.remove(), 1000);
     document.body.style.overflow = '';
-    // плавно показываем контент и sparkles
+    // плавно показываем контент
     document.querySelector('.wrapper').classList.add('visible');
-    document.querySelector('.sparkles').classList.add('visible');
     audio.play().then(() => {
       document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     }).catch(() => {});
