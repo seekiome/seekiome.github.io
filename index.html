@@ -594,18 +594,8 @@
         }
       }
     } catch (e) {
-      console.log('Discord fetch failed');
-      // если API недоступен — всё равно разрешаем вход через 5 сек
-      if (!apiReady) {
-        apiReady = true;
-        const splash = document.getElementById('splash');
-        if (splash) {
-          document.getElementById('splashText').textContent = 'Click..';
-          document.getElementById('splashSub').textContent = 'to enter';
-          splash.classList.remove('loading');
-          splash.classList.add('ready');
-        }
-      }
+      console.log('Discord fetch failed, retrying in 5s...');
+      setTimeout(fetchDiscordData, 5000);
     }
   }
   fetchDiscordData();
