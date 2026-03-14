@@ -31,8 +31,9 @@
       90%  { opacity: 0.5; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
-    .wrapper { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; opacity: 0; transition: opacity 0.8s ease; }
-    .wrapper.visible { opacity: 1; }
+    .wrapper { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+    .fade-item { opacity: 0; transform: translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-item.show { opacity: 1; transform: translateY(0); }
     .header-box { background: var(--pink-light); border: 2.5px solid var(--red); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .banner { position: relative; overflow: hidden; height: 185px; }
     #bannerCanvas { display: block; width: 100%; height: 185px; object-fit: cover; }
@@ -118,7 +119,7 @@
 <div class="sparkles" id="sparkles"></div>
 
 <div class="wrapper">
-  <div class="header-box">
+  <div class="header-box fade-item">
     <div class="banner">
       <canvas id="bannerCanvas"></canvas>
       <div style="position:absolute;inset:0;z-index:1;"></div>
@@ -140,7 +141,7 @@
     </div>
   </div>
 
-  <div class="marquee-wrap">
+  <div class="marquee-wrap fade-item">
     <div class="marquee-inner">
       <div class="marquee-set">
         <span>✦ more about me!</span><span>✦ more about me!</span>
@@ -161,7 +162,7 @@
 
   <div class="grid">
 
-    <div class="card">
+    <div class="card fade-item">
       <div class="card-title">About Me</div>
       <div class="card-body about-text">
         <p>hey! i'm <strong>Megu</strong>, nice to meet u :3</p>
@@ -170,7 +171,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card fade-item">
       <div class="card-title">Miscellaneous</div>
       <div class="card-body">
         <p class="misc-text">
@@ -182,7 +183,7 @@
       </div>
     </div>
 
-    <div class="card full">
+    <div class="card full fade-item">
       <div class="card-title">Fave Anime</div>
       <div class="card-body" style="padding: 10px 0;">
         <div class="anime-track-wrap">
@@ -191,14 +192,14 @@
       </div>
     </div>
 
-    <div class="card full">
+    <div class="card full fade-item">
       <div class="card-title">My Playlist</div>
       <div class="card-body">
         <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7iHVlqd9DcdSke1Ux3Zhbl?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
     </div>
 
-    <div class="card full" id="playerCard">
+    <div class="card full fade-item" id="playerCard">
       <div class="card-title">Now Playing</div>
       <div class="card-body" style="padding: 12px 16px;">
         <div class="player-wrap">
@@ -246,7 +247,7 @@
       </div>
     </div>
 
-    <div class="card full">
+    <div class="card full fade-item">
       <div class="card-title">Socials</div>
       <div class="card-body">
         <a href="https://t.me/seekiome" class="social-tg" title="Telegram" target="_blank">
@@ -259,7 +260,7 @@
 
   </div>
 
-  <div class="footer">Developed by Seekio</div>
+  <div class="footer fade-item">Developed by Seekio</div>
 </div>
 
 <script>
@@ -364,9 +365,15 @@
   splash.addEventListener('click', () => {
     if (!splash.classList.contains('ready')) return;
     splash.classList.add('hide');
-    document.querySelector('.wrapper').classList.add('visible');
-    setTimeout(() => splash.remove(), 650);
     document.body.style.overflow = '';
+
+    // поочерёдно показываем элементы
+    const items = document.querySelectorAll('.fade-item');
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add('show'), i * 120);
+    });
+
+    setTimeout(() => splash.remove(), 650);
     audio.play().then(() => {
       document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     }).catch(() => {});
