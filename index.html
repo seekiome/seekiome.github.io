@@ -58,7 +58,8 @@
     .card-body { padding: 14px; font-size: 0.9rem; color: #7a3050; line-height: 1.7; text-align: center; }
     .about-text p { margin-bottom: 8px; }
     .about-text strong { color: var(--red); }
-    .anime-track-wrap { overflow: hidden; padding: 8px 0; mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); }
+    .anime-track-wrap { overflow: hidden; padding: 8px 0; mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); cursor: grab; }
+    .anime-track-wrap:active { cursor: grabbing; }
     .anime-track { display: flex; gap: 10px; width: max-content; }
     .anime-card { border: 2.5px solid var(--red); border-radius: 14px; width: 110px; height: 160px; flex-shrink: 0; overflow: hidden; transition: transform 0.15s; cursor: default; }
     .anime-card:hover { transform: scale(1.05); }
@@ -110,6 +111,11 @@
   </style>
 </head>
 <body>
+<script>
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+</script>
 
 <div id="splash" class="loading">
   <div class="splash-text" id="splashText">Loading..</div>
@@ -264,7 +270,6 @@
 </div>
 
 <script>
-  window.scrollTo(0, 0);
   // ── Banner canvas ──
   const bannerCanvas = document.getElementById('bannerCanvas');
   const bannerCtx = bannerCanvas.getContext('2d');
