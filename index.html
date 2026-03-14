@@ -36,9 +36,8 @@
     .banner { position: relative; overflow: hidden; height: 185px; }
     #bannerCanvas { display: block; width: 100%; height: 185px; object-fit: cover; }
     .profile-row { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 20px; text-align: center; }
-    .avatar-wrap { position: relative; flex-shrink: 0; width: 110px; height: 110px; overflow: hidden; }
-    .avatar-pfp { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75px; height: 75px; min-width: 75px; min-height: 75px; max-width: 75px; max-height: 75px; border-radius: 50%; object-fit: cover; z-index: 1; }
-    .avatar-full-gif { position: absolute; top: 0; left: 0; width: 110px; height: 110px; min-width: 110px; min-height: 110px; max-width: 110px; max-height: 110px; object-fit: contain; z-index: 2; pointer-events: none; }
+    .avatar-wrap { position: relative; flex-shrink: 0; width: 110px; height: 110px; }
+    .avatar-full-gif { width: 110px; height: 110px; object-fit: contain; }
     .avatar-badge { position: absolute; bottom: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid var(--pink-light); box-sizing: border-box; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #171015; }
     .profile-info h1 { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--red); }
     .pronouns { display: inline-block; background: white; border: 1.5px solid var(--red); border-radius: 20px; padding: 1px 10px; font-size: 0.75rem; color: var(--red); font-weight: 700; margin-left: 6px; vertical-align: middle; }
@@ -120,8 +119,7 @@
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
-        <img src="ava.png" class="avatar-pfp" id="avatarImg" width="75" height="75" alt="Avatar"/>
-        <img src="decoration.gif" class="avatar-full-gif" id="decorationImg" width="110" height="110" alt="Decoration"/>
+        <img src="decoration.gif" class="avatar-full-gif" id="decorationImg" width="110" height="110" alt="Megu"/>
         <div class="avatar-badge">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="display:block;">
             <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" fill="#ffc04f" transform="translate(24,0) scale(-1,1)"/>
