@@ -58,11 +58,9 @@
     .card-body { padding: 14px; font-size: 0.9rem; color: #7a3050; line-height: 1.7; text-align: center; }
     .about-text p { margin-bottom: 8px; }
     .about-text strong { color: var(--red); }
-    .anime-track-wrap { overflow: hidden; padding: 8px 0; mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); cursor: grab; }
-    .anime-track-wrap:active { cursor: grabbing; }
-    .anime-track { display: flex; gap: 10px; width: max-content; cursor: grab; }
-    .anime-track:active { cursor: grabbing; }
-    .anime-card { border: 2.5px solid var(--red); border-radius: 14px; width: 110px; height: 160px; flex-shrink: 0; overflow: hidden; transition: transform 0.15s; cursor: grab; pointer-events: none; }
+    .anime-track-wrap { overflow: hidden; padding: 8px 0; mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent); }
+    .anime-track { display: flex; gap: 10px; width: max-content; }
+    .anime-card { border: 2.5px solid var(--red); border-radius: 14px; width: 110px; height: 160px; flex-shrink: 0; overflow: hidden; transition: transform 0.15s; cursor: default; }
 
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -71,7 +69,7 @@
     ::-webkit-scrollbar-thumb:hover { background: #c0304e; }
     * { scrollbar-width: thin; scrollbar-color: var(--red) var(--pink-light); }
     .anime-card:hover { transform: scale(1.05); }
-    .anime-card img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .anime-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .anime-card-placeholder { width: 100%; height: 100%; background: var(--stripe); display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--red); }
     .player-wrap { background: var(--pink-light); border-radius: 14px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; }
     .player-left { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
