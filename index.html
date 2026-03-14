@@ -98,7 +98,9 @@
     @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } .card.full { grid-column: 1; } }
   </style>
   <style>
-    #splash { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.6s ease; }
+    #splash { position: fixed; inset: 0; z-index: 9998; background: rgba(0,0,0,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
+    #splash.loading { pointer-events: none; cursor: default; }
+    #splash.ready { pointer-events: auto; cursor: pointer; }
     #splash.hide { opacity: 0; pointer-events: none; }
     .splash-text { font-family: 'Fredoka One', cursive; font-size: 2.4rem; color: #fff; letter-spacing: 4px; animation: splashPulse 1.6s ease-in-out infinite; }
     .splash-sub { font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 10px; letter-spacing: 2px; }
@@ -107,9 +109,9 @@
 </head>
 <body>
 
-<div id="splash">
-  <div class="splash-text">Click..</div>
-  <div class="splash-sub">to enter</div>
+<div id="splash" class="loading">
+  <div class="splash-text" id="splashText">Loading..</div>
+  <div class="splash-sub" id="splashSub">please wait</div>
 </div>
 
 <div class="sparkles" id="sparkles"></div>
@@ -512,24 +514,59 @@
     requestAnimationFrame(autoTick);
   }
   // ── Discord Avatar + Decoration (real-time) ──
+  let apiReady = false;
+
   async function fetchDiscordData() {
     try {
       const res = await fetch('https://discord-avatar-server.onrender.com/api/decoration');
       const data = await res.json();
       if (data.success) {
+        const promises = [];
+
         if (data.avatar_url) {
-          const ava = document.getElementById('avatarImg');
-          ava.onload = () => ava.classList.add('loaded');
-          ava.src = data.avatar_url;
+          promises.push(new Promise((resolve) => {
+            const ava = document.getElementById('avatarImg');
+            ava.onload = () => { ava.classList.add('loaded'); resolve(); };
+            ava.onerror = resolve;
+            ava.src = data.avatar_url;
+          }));
         }
+
         if (data.decoration_url) {
-          const deco = document.getElementById('decorationImg');
-          deco.onload = () => deco.classList.add('loaded');
-          deco.src = data.decoration_url;
+          promises.push(new Promise((resolve) => {
+            const deco = document.getElementById('decorationImg');
+            deco.onload = () => { deco.classList.add('loaded'); resolve(); };
+            deco.onerror = resolve;
+            deco.src = data.decoration_url;
+          }));
+        }
+
+        await Promise.all(promises);
+
+        if (!apiReady) {
+          apiReady = true;
+          const splash = document.getElementById('splash');
+          if (splash) {
+            document.getElementById('splashText').textContent = 'Click..';
+            document.getElementById('splashSub').textContent = 'to enter';
+            splash.classList.remove('loading');
+            splash.classList.add('ready');
+          }
         }
       }
     } catch (e) {
       console.log('Discord fetch failed');
+      // если API недоступен — всё равно разрешаем вход через 5 сек
+      if (!apiReady) {
+        apiReady = true;
+        const splash = document.getElementById('splash');
+        if (splash) {
+          document.getElementById('splashText').textContent = 'Click..';
+          document.getElementById('splashSub').textContent = 'to enter';
+          splash.classList.remove('loading');
+          splash.classList.add('ready');
+        }
+      }
     }
   }
   fetchDiscordData();
