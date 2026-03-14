@@ -32,7 +32,7 @@
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
     .wrapper { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; visibility: hidden; opacity: 0; }
-    .wrapper.visible { visibility: visible; animation: fadeInContent 0.95s ease forwards; }
+    .wrapper.visible { visibility: visible; animation: fadeInContent 1s ease forwards; }
     @keyframes fadeInContent { from { opacity: 0; } to { opacity: 1; } }
     .header-box { background: var(--pink-light); border: 2.5px solid var(--red); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .banner { position: relative; overflow: hidden; height: 185px; }
@@ -362,20 +362,36 @@
   // ── Splash ──
   const splash = document.getElementById('splash');
   document.body.style.overflow = 'hidden';
-  splash.addEventListener('click', () => {
+
+  const blockedKeys = ['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12',
+    'PrintScreen','ScrollLock','Pause','ContextMenu','Meta','Control','Alt','Shift',
+    'CapsLock','NumLock','Escape','Tab'];
+
+  function enterSite(e) {
+    // блокируем ПКМ
+    if (e.type === 'mousedown' && e.button === 2) return;
+    // блокируем спец клавиши
+    if (e.type === 'keydown' && blockedKeys.includes(e.key)) return;
+
     if (!splash.classList.contains('ready')) return;
-    // мгновенно убираем заставку
     splash.classList.add('hide');
     splash.remove();
     document.body.style.overflow = '';
-    // контент появляется после исчезновения заставки
     requestAnimationFrame(() => {
       document.querySelector('.wrapper').classList.add('visible');
     });
     audio.play().then(() => {
       document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     }).catch(() => {});
-  });
+    document.removeEventListener('keydown', enterSite);
+    document.removeEventListener('mousedown', enterSite);
+    document.removeEventListener('touchstart', enterSite);
+  }
+
+  splash.addEventListener('click', enterSite);
+  document.addEventListener('keydown', enterSite);
+  document.addEventListener('mousedown', enterSite);
+  document.addEventListener('touchstart', enterSite);
 
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
