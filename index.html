@@ -36,7 +36,7 @@
     @keyframes fadeInContent { from { opacity: 0; } to { opacity: 1; } }
     .header-box { background: var(--pink-light); border: 2.5px solid var(--red); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .banner { position: relative; overflow: hidden; height: 185px; }
-    #bannerCanvas { display: block; width: 100%; height: 185px; object-fit: cover; }
+    .banner-img { display: block; width: 100%; height: 185px; object-fit: cover; }
     .profile-row { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 20px; text-align: center; }
     .avatar-wrap { position: relative; flex-shrink: 0; width: 110px; height: 110px; }
     .avatar-pfp { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; border-radius: 50%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; }
@@ -137,8 +137,7 @@
 <div class="wrapper">
   <div class="header-box">
     <div class="banner">
-      <canvas id="bannerCanvas"></canvas>
-      <div style="position:absolute;inset:0;z-index:1;"></div>
+      <img src="banner.jpg" class="banner-img" alt="banner"/>
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
@@ -280,38 +279,6 @@
 </div>
 
 <script>
-  // ── Banner canvas ──
-  const bannerCanvas = document.getElementById('bannerCanvas');
-  const bannerCtx = bannerCanvas.getContext('2d');
-  const bannerVideo = document.createElement('video');
-  bannerVideo.src = 'banner.mp4';
-  bannerVideo.autoplay = true;
-  bannerVideo.loop = true;
-  bannerVideo.muted = true;
-  bannerVideo.playsInline = true;
-  bannerVideo.play();
-
-  function drawBanner() {
-    if (!bannerVideo.paused && !bannerVideo.ended) {
-      const cw = bannerCanvas.offsetWidth;
-      const ch = 185;
-      const vw = bannerVideo.videoWidth;
-      const vh = bannerVideo.videoHeight;
-      if (vw && vh) {
-        bannerCanvas.width = cw;
-        bannerCanvas.height = ch;
-        // cover-fit: scale video to fill 185px height
-        const scale = Math.max(cw / vw, ch / vh);
-        const dw = vw * scale;
-        const dh = vh * scale;
-        const dx = (cw - dw) / 2;
-        const dy = (ch - dh) / 2;
-        bannerCtx.drawImage(bannerVideo, dx, dy, dw, dh);
-      }
-    }
-    requestAnimationFrame(drawBanner);
-  }
-  bannerVideo.addEventListener('play', drawBanner);
 
   // ── Music Player ──
   const audio = document.getElementById('audioEl');
