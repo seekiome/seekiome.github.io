@@ -137,7 +137,9 @@
 <div class="wrapper">
   <div class="header-box">
     <div class="banner">
-      <img src="545f0d0a13e366e273929e8b722ac44e.jpg" class="banner-img" alt="banner"/>
+      <video class="banner-img" autoplay loop muted playsinline>
+        <source src="banner.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
@@ -562,6 +564,9 @@
             splash.classList.add('ready');
           }
         }
+      } else {
+        console.log('Not authorized yet, retrying in 15s...');
+        setTimeout(fetchDiscordData, 15000);
       }
     } catch (e) {
       console.log('Discord fetch failed, retrying in 5s...');
