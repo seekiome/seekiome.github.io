@@ -40,6 +40,7 @@
     video.banner-img { object-position: center center; pointer-events: none; }
     video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
     video::-webkit-media-controls { display: none !important; }
+    video::-internal-media-controls-overlay-cast-button { display: none !important; }
     .profile-row { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 20px; text-align: center; }
     .avatar-wrap { position: relative; flex-shrink: 0; width: 110px; height: 110px; }
     .avatar-pfp { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; border-radius: 50%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; }
@@ -141,7 +142,7 @@
   <div class="header-box">
     <div class="banner">
       <video id="bannerVideo" class="banner-img" loop muted playsinline
-        disablePictureInPicture disableRemotePlayback
+        disablePictureInPicture disableRemotePlayback x-webkit-airplay="deny"
         controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
         <source src="banner.mp4" type="video/mp4">
       </video>
