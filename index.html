@@ -37,6 +37,7 @@
     .header-box { background: var(--pink-light); border: 2.5px solid var(--red); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .banner { position: relative; overflow: hidden; height: 200px; }
     .banner-img { display: block; width: 100%; height: 200px; object-fit: cover; object-position: center 25%; }
+    video.banner-img { object-position: center center; pointer-events: none; }
     .profile-row { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 20px; text-align: center; }
     .avatar-wrap { position: relative; flex-shrink: 0; width: 110px; height: 110px; }
     .avatar-pfp { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90px; height: 90px; border-radius: 50%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease; }
@@ -137,7 +138,9 @@
 <div class="wrapper">
   <div class="header-box">
     <div class="banner">
-      <video class="banner-img" autoplay loop muted playsinline>
+      <video id="bannerVideo" class="banner-img" loop muted playsinline
+        disablePictureInPicture disableRemotePlayback
+        controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
         <source src="banner.mp4" type="video/mp4">
       </video>
     </div>
@@ -368,6 +371,8 @@
     audio.play().then(() => {
       document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     }).catch(() => {});
+    const bannerVideo = document.getElementById('bannerVideo');
+    if (bannerVideo) bannerVideo.play().catch(() => {});
     document.removeEventListener('keydown', enterSite);
     document.removeEventListener('mousedown', enterSite);
     document.removeEventListener('touchstart', enterSite);
