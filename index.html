@@ -137,12 +137,12 @@
 <div class="wrapper">
   <div class="header-box">
     <div class="banner">
-      <canvas id="bannerCanvas" class="banner-img"></canvas>
       <video id="bannerVideo" muted loop playsinline
         disablePictureInPicture disableRemotePlayback
-        style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;">
+        style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; z-index:1;">
         <source src="banner.mp4" type="video/mp4">
       </video>
+      <canvas id="bannerCanvas" class="banner-img" style="position:relative; z-index:2;"></canvas>
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
