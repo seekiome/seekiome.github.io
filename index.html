@@ -36,6 +36,7 @@
     @keyframes fadeInContent { from { opacity: 0; } to { opacity: 1; } }
     .header-box { background: var(--pink-light); border: 2.5px solid var(--red); border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
     .banner { position: relative; overflow: hidden; height: 200px; }
+    .banner-click-block { position: absolute; inset: 0; z-index: 5; background: transparent; }
     .banner-img { display: block; width: 100%; height: 200px; object-fit: cover; object-position: center 25%; }
     video.banner-img { object-position: center center; pointer-events: none; }
     video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
@@ -148,6 +149,7 @@
         controlsList="nodownload nofullscreen noremoteplayback noplaybackrate">
         <source src="banner.mp4" type="video/mp4">
       </video>
+      <div class="banner-click-block"></div>
     </div>
     <div class="profile-row">
       <div class="avatar-wrap">
